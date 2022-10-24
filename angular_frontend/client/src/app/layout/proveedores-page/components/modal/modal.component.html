@@ -1,0 +1,28 @@
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      {{persona_income.nombre}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      {{persona_income.apellido}}
+    </div>
+    <div class="col-6">
+      HOLA
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      HOLA
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-success" (click)="broadcast('Guardar')">
+    <i class="fas fa-save"></i>Guardar
+  </button>
+  <button type="button" class="btn btn-outline-danger" (click)="broadcast('Cancelar')">
+    <i class="fas fa-trash"></i>Cancelar
+  </button>
+</div>
