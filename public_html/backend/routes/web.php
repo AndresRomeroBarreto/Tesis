@@ -42,7 +42,7 @@ $router->group(['prefix'=>'/api/auth/user', 'middleware'=>['bddauth']], function
     $router->get('reset_password', ['uses'=>'AuthController@reset_password']);
 });
 
-$router->group(['prefix'=>'/api/auth/user', 'middleware'=>['auth']], function() use ($router) {
+$router->group(['prefix'=>'/api/auth/user', 'middleware'=>['bddauth','auth']], function() use ($router) {
     $router->post('upload_users', ['uses'=>'AuthController@upload_users']);
     $router->post('get_users', ['uses'=>'AuthController@get_users']);
     $router->put('update_user', ['uses'=>'AuthController@update_user']);
