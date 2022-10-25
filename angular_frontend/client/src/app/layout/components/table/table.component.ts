@@ -1,56 +1,111 @@
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CatalogService } from 'src/app/services/catalog.service';
 
 @Component({
-  selector: 'app-proveedores-page',
-  templateUrl: './proveedores-page.component.html',
-  styleUrls: ['./proveedores-page.component.scss']
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
-export class ProveedoresPageComponent implements OnInit {
+export class TableComponent implements OnInit {
+  @Input('item_selected_definition') item_selected_definition: any = null;
+  @Input('translations') translations: any = null;
+  @Input('db') db: string = '';
+  @Input('folder') folder: string = '';
+  @Input('modalContent') modalContent: any = null;
 
-  db: string = 'flota';
-  folder: string = 'proveedores';
-
+  output_model: any = {item_id: 1};
   filter: string = '';
   items: any[] = [];
   items_filtered: any[] = [];
   items_filtered_slice_shown: any[] = [];
-
-  item_selected: any = null;
+  item_selected: any =  {item_id: ''};
   item_is_selected: boolean = false;
-
   collectionSize: number = 0;
   page: number = 1;
   pageSize: any = 5;
-
   modal_reference: any;
 
-  constructor(private spinner: NgxSpinnerService,
-              private modalService: NgbModal,
-              private service_Catalog: CatalogService) { }
+  constructor(private spinner: NgxSpinnerService,private modalService: NgbModal, private service_Catalog: CatalogService) { }
 
   ngOnInit(): void {
-    this.refresh();
   }
 
-  refresh() {
-    this.get_items();
+  ngOnChanges(): void {
+    if (this.item_selected_definition != null) {
+      this.output_model = this.compare_with_definition(1);
+      this.item_is_selected = this.compare_with_definition('');
+      if (this.db != '' && this.folder != '') {
+        this.get_items();
+        this.refresh();
+      }
+    }
   }
 
-  nuevo() {
-    this.item_selected = {
-      item_id: '',
-      categoria: '',
-      nombre: '',
-      RUC: '',
-      descripcion: '',
-      contacto_phone: '',
-      contacto_mail: ''
-    };
-    this.item_is_selected = false;
+  compare_with_definition(default_value: any) {
+    let toReturn: any = {item_id: default_value};
+    Object.keys(this.item_selected_definition).forEach( (key_definition: any) => {
+      let existe = false;
+      Object.keys(toReturn).forEach( (key_output_model: any) => {
+        if (key_output_model == key_definition) {
+          existe = true;
+        }
+      });
+      if (!existe) {
+        toReturn[key_definition] = default_value;
+      }
+    });
+    return toReturn;
+  }
+
+  translation(toTranslate: string): string {
+    let toReturn: string = toTranslate;
+    try {
+      toReturn = this.translations[toTranslate];
+    } catch(e) {
+      toReturn = toTranslate;
+    }
+    return toReturn;
+  }
+
+  get_values(item: any): any[] {
+    let toReturn: any[] = [];
+    try {
+      for (let [key, value] of Object.entries(item)) {
+        if (key != 'item_id') {
+          toReturn.push(value);
+        }
+      }
+    } catch(e) {
+      toReturn = [];
+    }
+    return toReturn;
+  }
+
+  get_keys(item: any): any[] {
+    let toReturn: any[] = [];
+    try {
+      Object.keys(item).forEach(key => {
+        if (key != 'item_id') {
+          toReturn.push(key);
+        }
+      });
+    } catch(e) {
+      toReturn = [];
+    }
+    return toReturn;
+  }
+
+  new_item() {
+    this.start_item_selected();
+    this.open_modal();
+  }
+
+  start_item_selected() {
+    this.item_is_selected = this.compare_with_definition('');
+    this.item_selected = JSON.parse(JSON.stringify(this.item_selected_definition));
   }
 
   search_data() {
@@ -108,19 +163,9 @@ export class ProveedoresPageComponent implements OnInit {
   }
 
   get_items() {
-    let output_model = {
-      item_id: 1,
-      categoria: 1,
-      nombre: 1,
-      RUC: 1,
-      descripcion: 1,
-      contacto_phone: 1,
-      contacto_mail: 1
-    };
     this.spinner.show();
-    this.service_Catalog.get_items(this.db, this.folder, output_model).then( r => {
+    this.service_Catalog.get_items(this.db, this.folder, this.output_model).then( r => {
       this.spinner.hide();
-      this.nuevo();
       this.items = r as any[];
       this.search_data();
     }).catch( e => { console.log(e); });
@@ -135,8 +180,8 @@ export class ProveedoresPageComponent implements OnInit {
     this.item_is_selected = true;
   }
 
-  open_modal(content: any) {
-    this.modal_reference = this.modalService.open(content, {centered: true, size: 'lg', backdrop: 'static', keyboard: false});
+  open_modal() {
+    this.modal_reference = this.modalService.open(this.modalContent, {centered: true, size: 'lg', backdrop: 'static', keyboard: false});
   }
 
   cancelar_modal() {
