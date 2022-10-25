@@ -1,6 +1,6 @@
 <div class="row p-2">
   <h1 class="col-12 text-right">
-    Lista de Proveedores externos
+    Lista de Proveedores Externos
   </h1>
 </div>
 
@@ -8,7 +8,7 @@
   <div class="col-12 mb-3">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group mr-2" role="group">
-        <button type="button" class="btn btn-primary" (click)="agregar()">
+        <button type="button" class="btn btn-primary" (click)="nuevo(); open_modal(modalContent);">
           <i class="fas fa-plus-circle"></i>
         </button>
       </div>
@@ -25,10 +25,9 @@
       <thead>
         <tr>
           <th>
-            <small><strong>#</strong></small>
           </th>
           <th>
-            <small><strong>Categoria</strong></small>
+            <small><strong>Categoría</strong></small>
           </th>
           <th>
             <small><strong>Nombre Comercial</strong></small>
@@ -37,22 +36,22 @@
             <small><strong>RUC</strong></small>
           </th>
           <th>
-            <small><strong>Descripcion</strong></small>
+            <small><strong>Descripción</strong></small>
           </th>
           <th>
             <small><strong>Teléfono</strong></small>
           </th>
           <th>
-            <small><strong>e-mail</strong></small>
+            <small><strong>Correo Electrónico</strong></small>
           </th>
           <th>
-            <small><strong>Controles</strong></small>
+            <small><strong>Opciones</strong></small>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let proveedor of proveedores" (click)="select_proveedor(proveedor)">
-          <td class="text-right"><small><strong><span *ngIf="proveedor_selected == proveedor" class="far fa-hand-point-right"></span></strong></small></td>
+        <tr *ngFor="let proveedor of items_filtered_slice_shown" (click)="select_item(proveedor)">
+          <td class="text-right"><small><strong><span *ngIf="item_selected == proveedor" class="far fa-hand-point-right"></span></strong></small></td>
           <td>
             {{proveedor.categoria}}
           </td>
@@ -74,10 +73,10 @@
 
           <td>
             <div class="btn-group mr-2" role="group">
-              <button type="button" class="btn btn-warning" (click)="editar()">
+              <button type="button" class="btn btn-warning" [disabled]="!item_is_selected" (click)="open_modal(modalContent)">
                 <i class="fas fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-danger" (click)="eliminar()">
+              <button type="button" class="btn btn-danger" [disabled]="!item_is_selected" (click)="delete()">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </div>
@@ -93,7 +92,7 @@
         [collectionSize]="collectionSize"
         [(page)]="page"
         [pageSize]="pageSize"
-        (pageChange)="refreshTable()">
+        (pageChange)="build_table_slice()">
         <ng-template ngbPaginationFirst>Primera</ng-template>
         <ng-template ngbPaginationLast>Última</ng-template>
         <ng-template ngbPaginationPrevious>Anterior</ng-template>
@@ -124,27 +123,21 @@
           </li>
         </ng-template>
       </ngb-pagination>
-      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshTable()">
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="build_table_slice()">
         <option value="5">5 elementos por página</option>
         <option value="10">10 elementos por página</option>
         <option value="20">20 elementos por página</option>
       </select>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <button class="btn btn-primary" (click)="open(modalContent)">MODAL</button>
-    </div>
-  </div>
 </div>
 
 <ng-template #modalContent let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">MI PRIMER MODAL</h4>
-    <button type="button" class="close" (click)="modal.dismiss('Close')">
+    <h4 class="modal-title">Proveedor</h4>
+    <button type="button" class="close" (click)="cancelar_modal()">
       <span>&times;</span>
     </button>
   </div>
-  <app-modal (modal_event)="process_modal_event($event)" [persona_income]="persona"></app-modal>
+  <app-modal (modal_event)="process_modal_event($event)" [item_income]="item_selected"></app-modal>
 </ng-template>
-<app-date-time-picker></app-date-time-picker>

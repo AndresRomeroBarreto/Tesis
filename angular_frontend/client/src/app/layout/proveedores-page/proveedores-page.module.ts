@@ -1,8 +1,7 @@
-import { DateTimePickerModule } from './../../flota-elements/date-time-picker/date-time-picker.module';
+import { CatalogService } from 'src/app/services/catalog.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 import { ProveedoresPageRoutingModule } from './proveedores-page-routing.module';
 import { ProveedoresPageComponent } from './proveedores-page.component';
@@ -18,9 +17,10 @@ import { ModalComponent } from './components/modal/modal.component';
     CommonModule,
     ProveedoresPageRoutingModule,
     FormsModule,
-    DateTimePickerModule,
     NgbModule
   ],
-  providers: []
+  providers: [
+    CatalogService
+  ]
 })
 export class ProveedoresPageModule { }
