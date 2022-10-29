@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { definitions, toStringKeys, catalogos } from 'src/app/models/definitions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,6 +16,19 @@ export class ModalComponent implements OnInit {
   max_file_size: number = environment.max_file_size;
   item: any =  {item_id: ''};
 
+  vehiculo_definition = definitions.vehiculo;
+  vehiculo_keys = toStringKeys.vehiculo;
+
+  proveedor_definition = definitions.proveedor;
+  proveedor_keys = toStringKeys.proveedor;
+
+  operador_definition = definitions.operador;
+  operador_keys = toStringKeys.operador;
+
+  servicio_definition = definitions.servicio;
+  servicio_keys = toStringKeys.servicio;
+
+  catalogo_estados_mantenimiento = catalogos.estados_mantenimiento;
   constructor() { }
 
   ngOnInit(): void {

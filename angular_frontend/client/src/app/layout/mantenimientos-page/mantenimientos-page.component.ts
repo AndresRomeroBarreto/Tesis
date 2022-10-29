@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { definitions, transalations } from 'src/app/models/definitions';
 
 @Component({
   selector: 'app-mantenimientos-page',
@@ -11,28 +12,8 @@ export class MantenimientosPageComponent implements OnInit {
   db: string = 'flota';
   folder: string = 'mantenimientos';
 
-  mantenimiento_definition = {
-    item_id: 'text',
-    status: 'text',
-    nombre: 'text',
-    vehicle: 'text',
-    plate: 'text',
-    service_provided: 'text',
-    date: 'date',
-    price: 'money',
-    document: 'file'
-  };
-
-  translations = {
-    status: 'Estado',
-    nombre: 'Nombre',
-    vehicle: 'Vehículo Afectado',
-    plate: 'Placa',
-    service_provided: 'Servicio Provisto',
-    date: 'Fecha',
-    price: 'Costo',
-    document: 'Documento Adjunto'
-  }
+  mantenimiento_definition = definitions.mantenimiento;
+  translations = transalations.mantenimiento;
 
   constructor() { }
 

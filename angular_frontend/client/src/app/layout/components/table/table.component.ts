@@ -36,7 +36,7 @@ export class TableComponent implements OnInit {
   ngOnChanges(): void {
     if (this.item_definition != null) {
       this.output_model = this.compare_with_definition(1);
-      this.item_is_selected = this.compare_with_definition('');
+      this.item_selected = this.compare_with_definition('');
       if (this.db != '' && this.folder != '') {
         this.get_items();
         this.refresh();

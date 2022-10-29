@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { definitions, transalations } from 'src/app/models/definitions';
 
 @Component({
   selector: 'app-catalogo-servicios-page',
@@ -10,22 +11,8 @@ export class CatalogoServiciosPageComponent implements OnInit {
   db: string = 'flota';
   folder: string = 'servicios';
 
-  service_definition = {
-    item_id: 'text',
-    nombre: 'text',
-    provider: 'text',
-    description: 'text',
-    price: 'money',
-    document: 'file'
-  };
-
-  translations = {
-    nombre: 'Nombre',
-    provider: 'Proveedor',
-    description: 'Descripción',
-    price: 'Costo',
-    document: 'Documento Adjunto'
-  }
+  service_definition = definitions.servicio;
+  translations = transalations.servicio;
 
   constructor() { }
 

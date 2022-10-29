@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { definitions, transalations } from 'src/app/models/definitions';
 
 @Component({
   selector: 'app-proveedores-page',
@@ -10,24 +11,8 @@ export class ProveedoresPageComponent implements OnInit {
   db: string = 'flota';
   folder: string = 'proveedores';
 
-  proveedor_definition = {
-    item_id: 'text',
-    categoria: 'text',
-    nombre: 'text',
-    RUC: 'text',
-    descripcion: 'text',
-    contacto_phone: 'phone',
-    contacto_mail: 'email'
-  };
-
-  translations = {
-    categoria: 'Categoría',
-    nombre: 'Nombre Proveedor',
-    RUC: 'Registro Único de Contribuyente',
-    descripcion: 'Descripción',
-    contacto_phone: 'Número Telefónico',
-    contacto_mail: 'Correo Electrónico'
-  }
+  proveedor_definition = definitions.proveedor;
+  translations = transalations.proveedor;
 
   constructor() { }
 

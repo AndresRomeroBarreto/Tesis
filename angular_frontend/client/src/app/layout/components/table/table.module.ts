@@ -1,3 +1,5 @@
+import { DropdowncatalogModule } from './../dropdowncatalog/dropdowncatalog.module';
+import { DropdownclassModule } from './../dropdownclass/dropdownclass.module';
 import { UploadFilesModule } from './../upload-files/upload-files.module';
 import { TableComponent } from './table.component';
 import { NgModule } from '@angular/core';
@@ -19,6 +21,8 @@ import { AgmCoreModule } from '@agm/core';
     CommonModule,
     NgbModule,
     UploadFilesModule,
+    DropdownclassModule,
+    DropdowncatalogModule,
     AgmCoreModule.forRoot({
       apiKey: environment.gmapapiKey,
       apiVersion: '3.31'

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { definitions, transalations } from 'src/app/models/definitions';
 
 @Component({
   selector: 'app-poliza-seguros-page',
@@ -10,20 +11,8 @@ export class PolizaSegurosPageComponent implements OnInit {
   db: string = 'flota';
   folder: string = 'polizas';
 
-  poliza_definition = {
-    item_id: 'text',
-    nombre: 'text',
-    description: 'text',
-    price: 'money',
-    document: 'file',
-  };
-
-  translations = {
-    nombre: 'Nombre',
-    description: 'Descripción de Cobertura',
-    price: 'Costo',
-    document: 'Documento Adjunto'
-  }
+  poliza_definition = definitions.poliza;
+  translations = transalations.poliza;
 
   constructor() { }
 

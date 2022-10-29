@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { definitions, transalations } from 'src/app/models/definitions';
 
 @Component({
   selector: 'app-operadores-page',
@@ -10,22 +11,8 @@ export class OperadoresPageComponent implements OnInit {
   db: string = 'flota';
   folder: string = 'operadores';
 
-  operador_definition = {
-    item_id: 'text',
-    document_id: 'text',
-    lastname: 'text',
-    firstname: 'text',
-    driver_document_date: 'date',
-    driver_document: 'picture',
-  };
-
-  translations = {
-    document_id: 'Categoría',
-    lastname: 'Apellidos',
-    firstname: 'Nombres',
-    driver_document_date: 'Fecha de Expiración de Licencia',
-    driver_document: 'Licencia'
-  }
+  operador_definition = definitions.operador;
+  translations = transalations.operador;
 
   constructor() { }
 
