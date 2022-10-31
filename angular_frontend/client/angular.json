@@ -36,7 +36,9 @@
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/ckeditor.js"
+            ],
             "allowedCommonJsDependencies": [
               "rxjs-compat"
             ]

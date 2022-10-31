@@ -31,7 +31,18 @@ export class UploadFilesComponent implements OnInit {
   }
 
   ngOnChanges() {
+    this.clean_files();
     this.validate_files();
+  }
+
+  clean_files() {
+    let files_cleaned: any[] = [];
+    this.files.forEach(element => {
+      if (element !== '') {
+        files_cleaned.push(element);
+      }
+    });
+    this.files = files_cleaned;
   }
 
   delete_file(file: any) {

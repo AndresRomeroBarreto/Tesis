@@ -4,6 +4,9 @@
       <button type="button" class="btn btn-primary" (click)="start_item_selected(); open_modal(modalContent);">
         <i class="fas fa-plus-circle"></i>
       </button>
+      <button type="button" class="btn btn-info" (click)="download_excel()">
+        <i class="fas fa-download"></i>
+      </button>
     </div>
     <div class="input-group mr-2">
       <button class="input-group-text btn btn-light" id="basic-addon1" (click)="search_data()">
@@ -37,10 +40,14 @@
                        item_definition[toShow.key] != 'phone' &&
                        item_definition[toShow.key] != 'geo' &&
                        item_definition[toShow.key] != 'money' &&
-                       item_definition[toShow.key] != 'date'
+                       item_definition[toShow.key] != 'longtext' &&
+                       item_definition[toShow.key] != 'date' &&
+                       item_definition[toShow.key] != 'boolean'
                       ">{{toShow.value}}</span>
+          <span *ngIf="item_definition[toShow.key] == 'boolean'"><i class="fas fa-check" *ngIf="toShow.value == 'true'"></i><i class="fas fa-times" *ngIf="toShow.value !== 'true'"></i></span>
           <span *ngIf="item_definition[toShow.key] == 'date'">{{toShow.value | date: 'y-MM-dd'}}</span>
           <span *ngIf="item_definition[toShow.key] == 'money'">USD {{toShow.value}}</span>
+          <span *ngIf="item_definition[toShow.key] == 'longtext'" [innerHTML]="toShow.value"></span>
           <a *ngIf="item_definition[toShow.key] == 'geo'" class="btn btn-secondary" [href]="'https://www.google.com/maps/@' + json_to_object(toShow.value).latitude + ',' + json_to_object(toShow.value).longitude + ',15z'" target="blank">
             <i class="fas fa-map-signs"></i>
           </a>

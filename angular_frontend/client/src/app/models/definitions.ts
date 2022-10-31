@@ -4,20 +4,21 @@ export const definitions = {
     categoria: 'text',
     nombre: 'text',
     RUC: 'text',
-    descripcion: 'text',
+    descripcion: 'longtext',
     contacto_phone: 'phone',
     contacto_mail: 'email'
   },
   poliza: {
     item_id: 'text',
     nombre: 'text',
-    description: 'text',
+    description: 'longtext',
     price: 'money',
     provider: 'provider',
     document: 'file',
   },
   operador: {
     item_id: 'text',
+    active: 'boolean',
     document_id: 'text',
     lastname: 'text',
     firstname: 'text',
@@ -34,6 +35,7 @@ export const definitions = {
     date: 'date',
     price: 'money',
     km: 'number',
+    taller: 'geo',
     document: 'file'
   },
   vehiculo: {
@@ -51,7 +53,7 @@ export const definitions = {
   servicio: {
     item_id: 'text',
     nombre: 'text',
-    description: 'text'
+    description: 'longtext'
   }
 }
 
@@ -72,6 +74,7 @@ export const transalations = {
     document: 'Documento Adjunto'
   },
   operador: {
+    active: 'Activo',
     document_id: 'Documento de Identidad',
     lastname: 'Apellidos',
     firstname: 'Nombres',
@@ -88,6 +91,7 @@ export const transalations = {
     date: 'Fecha',
     price: 'Costo',
     km: 'Kilometraje',
+    taller: 'Taller',
     document: 'Documento Adjunto'
   },
   vehiculo: {

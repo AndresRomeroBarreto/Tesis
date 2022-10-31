@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class DropdowncatalogComponent implements OnInit {
   @Output('item_selected_event') item_selected_event: EventEmitter<any> = new EventEmitter();
   @Input('items') items: any[] = [];
-  item_selected: string = '';
+  @Input('item_selected') item_selected: string = '';
 
   constructor() { }
 

@@ -101,8 +101,11 @@ export class ModalComponent implements OnInit {
     this.item[key] = JSON.stringify({ latitude: event.coords.lat, longitude: event.coords.lng });
   }
 
-  json_to_object(json: string): any {
-    return JSON.parse(json);
+  json_to_object_geo(json: string): any {
+    if (json != '') {
+      return JSON.parse(json);
+    }
+    return { latitude: -0.1486474, longitude: -78.4661487 };
   }
 
   files_uploaded(event: any, key: string) {

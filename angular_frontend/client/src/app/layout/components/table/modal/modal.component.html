@@ -8,19 +8,24 @@
                    item_definition[key] != 'number' &&
                    item_definition[key] != 'money' &&
                    item_definition[key] != 'geo' &&
+                   item_definition[key] != 'boolean'&&
                    item_definition[key] != 'date' &&
                    item_definition[key] != 'flota' &&
                    item_definition[key] != 'provider' &&
                    item_definition[key] != 'operator' &&
                    item_definition[key] != 'service'&&
+                   item_definition[key] != 'longtext'&&
                    item_definition[key] != 'estados_mantenimiento'
                  " type="text" class="form-control" [placeholder]="translation(key)" [(ngModel)]="item[key]">
-
       <input *ngIf="item_definition[key] == 'email'" type="email" class="form-control" [placeholder]="translation(key)" [(ngModel)]="item[key]">
       <input *ngIf="item_definition[key] == 'number'" type="number" class="form-control" [placeholder]="translation(key)" [(ngModel)]="item[key]">
       <input *ngIf="item_definition[key] == 'money'" type="number"  step="0.01" class="form-control" [placeholder]="translation(key)" [(ngModel)]="item[key]">
       <input *ngIf="item_definition[key] == 'date'" type="date" class="form-control" [placeholder]="translation(key)" [(ngModel)]="item[key]">
+      <app-switch *ngIf="item_definition[key] == 'boolean'" [name]="key" [switch_state]="item[key] == 'true'" (switch_change)="item[key] = $event.toString()"></app-switch>
+      <ck-editor *ngIf="item_definition[key] == 'longtext'" [name]="key" skin="moono-lisa" [(ngModel)]="item[key]" language="es" [fullPage]="true"></ck-editor>
       <app-dropdowncatalog *ngIf="item_definition[key] == 'estados_mantenimiento'"
+        [item_selected]="item[key]"
+        (item_selected_event)="item[key] = $event"
         [items]="catalogo_estados_mantenimiento"
       ></app-dropdowncatalog>
       <app-dropdownclass  *ngIf="item_definition[key] == 'flota'"
@@ -28,36 +33,44 @@
         [db]="'flota'"
         [folder]="'vehiculos'"
         [keys_shown]="vehiculo_keys"
+        [item_selected]="item[key]"
+        (item_selected_event)="item[key] = $event"
       ></app-dropdownclass>
       <app-dropdownclass  *ngIf="item_definition[key] == 'provider'"
         [item_definition]="proveedor_definition"
         [db]="'flota'"
         [folder]="'proveedores'"
         [keys_shown]="proveedor_keys"
+        [item_selected]="item[key]"
+        (item_selected_event)="item[key] = $event"
       ></app-dropdownclass>
       <app-dropdownclass  *ngIf="item_definition[key] == 'operator'"
         [item_definition]="operador_definition"
         [db]="'flota'"
         [folder]="'operadores'"
         [keys_shown]="operador_keys"
+        [item_selected]="item[key]"
+        (item_selected_event)="item[key] = $event"
       ></app-dropdownclass>
       <app-dropdownclass  *ngIf="item_definition[key] == 'service'"
         [item_definition]="servicio_definition"
         [db]="'flota'"
         [folder]="'servicios'"
         [keys_shown]="servicio_keys"
+        [item_selected]="item[key]"
+        (item_selected_event)="item[key] = $event"
       ></app-dropdownclass>
       <agm-map *ngIf="item_definition[key] == 'geo'" class="col-12" style="height: 400px;"
         [gestureHandling]="'cooperative'"
         [scrollwheel]="true"
         [zoomControl]="true"
-        [latitude]="json_to_object(item[key]).latitude * 1"
-        [longitude]="json_to_object(item[key]).longitude * 1"
+        [latitude]="json_to_object_geo(item[key]).latitude * 1"
+        [longitude]="json_to_object_geo(item[key]).longitude * 1"
         [zoom]="15"
         (mapClick)="setLocationEvent($event, key)">
         <agm-marker
-          [latitude]="json_to_object(item[key]).latitude * 1"
-          [longitude]="json_to_object(item[key]).longitude * 1"
+          [latitude]="json_to_object_geo(item[key]).latitude * 1"
+          [longitude]="json_to_object_geo(item[key]).longitude * 1"
           (dragEnd)="setLocationEvent($event, key)"
           [animation]="'DROP'">
         </agm-marker>

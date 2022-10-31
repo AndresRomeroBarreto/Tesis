@@ -13,8 +13,8 @@ export class DropdownclassComponent implements OnInit {
   @Input('db') db: string = '';
   @Input('folder') folder: string = '';
   @Input('keys_shown') keys_shown: any[] = [];
+  @Input('item_selected') item_selected: string = '';
 
-  item_selected: any = null;
   output_model: any = {item_id: 1};
   items: any[] = [];
 
@@ -27,7 +27,6 @@ export class DropdownclassComponent implements OnInit {
     if (this.item_definition != null) {
       this.output_model = this.compare_with_definition(1);
       if (this.db != '' && this.folder != '') {
-        console.log('entre');
         this.get_items();
       }
     }

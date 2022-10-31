@@ -1,4 +1,4 @@
 <select class="form-control" [(ngModel)]="item_selected" (change)="onSelect()">
-  <option value="''" selected disabled>Seleccione</option>
+  <option value="" selected disabled>Seleccione</option>
   <option *ngFor="let item of items" [value]="item">{{item}}</option>
 </select>

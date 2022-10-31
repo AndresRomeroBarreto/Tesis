@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CatalogService } from 'src/app/services/catalog.service';
 import { FileSaverService } from 'ngx-filesaver';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-table',
@@ -31,6 +32,44 @@ export class TableComponent implements OnInit {
   constructor(private fileServerService: FileSaverService, private spinner: NgxSpinnerService,private modalService: NgbModal, private service_Catalog: CatalogService) { }
 
   ngOnInit(): void {
+  }
+
+  download_excel() {
+    let headers_string: string = '';
+    Object.keys(this.item_definition).forEach( (key: any) => {
+      if (key != 'item_id' && key != 'timestamp' && key != '_id') {
+        headers_string += this.translations[key] + ';';
+      }
+    });
+    let ws_data_headers: any[] = headers_string.split(';');
+    let ws_data: any[] = [];
+    ws_data.push(ws_data_headers);
+    this.items_filtered.forEach((item: any) => {
+      let ws_data_row: any[] = [];
+      Object.keys(this.item_definition).forEach( (key: any) => {
+        if (key != 'item_id' && key != 'timestamp' && key != '_id') {
+          let value = item[key];
+          let toWrite = value;
+          if (this.item_definition[key] == 'picture' || this.item_definition[key] == 'file') {
+            toWrite = 'ARCHIVO'
+          }
+          if (this.item_definition[key] == 'boolean') {
+            if (value == 'true') {
+              toWrite = 'SI';
+            } else {
+              toWrite = 'NO';
+            }
+          }
+          ws_data_row.push(toWrite);
+        }
+      });
+      ws_data.push(ws_data_row);
+    });
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(ws_data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,this.folder.toUpperCase());
+    const filename: string = (new Date()).toLocaleDateString() + '_' + this.folder + '.xlsx';
+    XLSX.writeFile(wb, filename);
   }
 
   ngOnChanges(): void {

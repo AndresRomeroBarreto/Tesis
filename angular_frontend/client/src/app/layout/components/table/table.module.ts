@@ -1,3 +1,4 @@
+import { SwitchModule } from './../switch/switch.module';
 import { DropdowncatalogModule } from './../dropdowncatalog/dropdowncatalog.module';
 import { DropdownclassModule } from './../dropdownclass/dropdownclass.module';
 import { UploadFilesModule } from './../upload-files/upload-files.module';
@@ -10,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
 import { environment } from 'src/environments/environment';
 import { AgmCoreModule } from '@agm/core';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [
@@ -20,8 +22,10 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     CommonModule,
     NgbModule,
+    CKEditorModule,
     UploadFilesModule,
     DropdownclassModule,
+    SwitchModule,
     DropdowncatalogModule,
     AgmCoreModule.forRoot({
       apiKey: environment.gmapapiKey,
