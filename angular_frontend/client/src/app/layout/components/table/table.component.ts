@@ -98,7 +98,13 @@ export class TableComponent implements OnInit {
         }
       });
       if (!existe) {
-        toReturn[key_definition] = default_value;
+        let set_value = default_value;
+        if (default_value == '') {
+          if (this.item_definition[key_definition] == 'file' || this.item_definition[key_definition] == 'picture') {
+            set_value = [];
+          }
+        }
+        toReturn[key_definition] = set_value;
       }
     });
     return toReturn;
@@ -118,18 +124,9 @@ export class TableComponent implements OnInit {
     return JSON.parse(json);
   }
 
-  download_file(item_id: string) {
-    let output_model = {
-      file_base64: 1,
-      name: 1,
-      type: 1
-    };
-    this.spinner.show();
-    this.service_Catalog.get_items('files', this.folder, output_model, {item_id: item_id}).then( r => {
-      this.spinner.hide();
-      let item: any = r[0];
-      this.download(item);
-    }).catch( e => { console.log(e); });
+  download_file(item_as_json: string) {
+    let item = JSON.parse(item_as_json)[0];
+    this.download(item);
   }
 
   download(item: any) {

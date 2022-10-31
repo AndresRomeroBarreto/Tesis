@@ -80,8 +80,7 @@
         <app-upload-files
           [max_file_size]="max_file_size"
           [max_file_count]="1"
-          [files]="[item[key]]"
-          [folder]="folder"
+          [files]="json_to_object_files(item[key])"
           (files_uploaded)="files_uploaded($event, key)"
         ></app-upload-files>
       </div>
@@ -91,8 +90,7 @@
           [max_file_size]="max_file_size"
           [max_file_count]="1"
           [accept]="'image/*'"
-          [files]="[item[key]]"
-          [folder]="folder"
+          [files]="json_to_object_files(item[key])"
           (files_uploaded)="files_uploaded($event, key)"
         ></app-upload-files>
       </div>

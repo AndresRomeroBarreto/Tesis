@@ -2,7 +2,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { FileSaverService } from 'ngx-filesaver';
-import { CatalogService } from 'src/app/services/catalog.service';
 
 @Component({
   selector: 'app-upload-files',
@@ -17,32 +16,19 @@ export class UploadFilesComponent implements OnInit {
   @Input('is_on_table') is_on_table: boolean = false;
   @Input('required') required: boolean = true;
   @Input('files') files: any[] = [];
-  @Input('folder') folder: string = 'general';
   @Input('accept') accept: string = '*';
   validate_file_size: boolean = false;
 
   constructor(
     private toastr: ToastrService,
-    private fileServerService: FileSaverService,
-    private fileStorageDataSerice: CatalogService
+    private fileServerService: FileSaverService
     ) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges() {
-    this.clean_files();
     this.validate_files();
-  }
-
-  clean_files() {
-    let files_cleaned: any[] = [];
-    this.files.forEach(element => {
-      if (element !== '') {
-        files_cleaned.push(element);
-      }
-    });
-    this.files = files_cleaned;
   }
 
   delete_file(file: any) {
@@ -123,21 +109,7 @@ export class UploadFilesComponent implements OnInit {
   }
 
   download_file(item: any) {
-    if (typeof item.file_base64 == 'undefined' || item.file_base64 == '') {
-      if (item.item_id != '') {
-        let output_model = {
-          file_base64: 1,
-          name: 1,
-          type: 1
-        };
-        this.fileStorageDataSerice.get_items('files', this.folder, output_model, {item_id: item.item_id}).then( r => {
-          item = r[0];
-          this.download(item);
-        }).catch( e => { console.log(e); });
-      }
-    } else {
-      this.download(item);
-    }
+    this.download(item);
   }
 
   download(item: any) {

@@ -44,7 +44,13 @@ export class ModalComponent implements OnInit {
         }
       });
       if (!existe) {
-        toReturn[key_definition] = default_value;
+        let set_value = default_value;
+        if (default_value == '') {
+          if (this.item_definition[key_definition] == 'file' || this.item_definition[key_definition] == 'picture') {
+            set_value = [];
+          }
+        }
+        toReturn[key_definition] = set_value;
       }
     });
     return toReturn;
@@ -108,10 +114,17 @@ export class ModalComponent implements OnInit {
     return { latitude: -0.1486474, longitude: -78.4661487 };
   }
 
+  json_to_object_files(json: string): any {
+    if (json != '') {
+      return JSON.parse(json);
+    }
+    return [];
+  }
+
   files_uploaded(event: any, key: string) {
     if (event.validated) {
-      let file = event.files[0];
-      console.log(file);
+      let files = event.files;
+      this.item[key] = JSON.stringify(files);
     }
   }
 }

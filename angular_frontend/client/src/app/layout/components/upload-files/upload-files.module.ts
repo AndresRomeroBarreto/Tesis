@@ -3,7 +3,6 @@ import { UploadFilesComponent } from './upload-files.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { CatalogService } from 'src/app/services/catalog.service';
 
 @NgModule({
   declarations: [UploadFilesComponent],
@@ -13,6 +12,6 @@ import { CatalogService } from 'src/app/services/catalog.service';
     NgxFileDropModule
   ],
   exports: [UploadFilesComponent],
-  providers: [CatalogService]
+  providers: []
 })
 export class UploadFilesModule { }
