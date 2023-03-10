@@ -14,7 +14,7 @@
 */
 
 $router->get('/', function () use ($router) {
-    return json_encode('WS MONGO BDD');
+    return json_encode('BACKEND TESIS - ANDRES ALEJANDRO ROMERO BARRETO');
 });
 
 $router->get('/key', function() {
